@@ -129,7 +129,7 @@ app.post("/login" , (req,res) => {
 // })
 
 
-// here is my api where i am verifying the jwt token .......
+// here is my api where i am verifying the jwt token and by checking email and i am inserting the eventmodel tables........
 app.post("/models" , (req,res) => {
     console.log(req.body)
     const user_token = req.cookies.token
@@ -173,6 +173,7 @@ app.post("/models" , (req,res) => {
         }
     })
 })
+
 
 // here is my update api where i am updating by auth token.....
 app.put("/update",(req,res)=>{  
@@ -270,7 +271,7 @@ app.get("/event" , (req,res) => {
 })
 
 
-// here is my middleware function checking the role of admin to view the second table details....
+// here is my middleware function checking the role of admin to view the second table details ....
 function middleware_verify_admin (req,res,next) {
     const user_token = req.cookies.token
     console.log(user_token,"????")
@@ -303,7 +304,7 @@ app.get("/admin" , middleware_verify_admin,  (req,res) => {
 })
 
 
-// api that i am joining the tables from first table to second table by userid.....
+// api that i am joining the tables from first table to second table by emails and only admin can view the joined tables....
 app.get("/join_event_model", (req,res) => {
     const user_token = req.cookies.token
     console.log(user_token,"????")
@@ -329,7 +330,7 @@ app.get("/join_event_model", (req,res) => {
 
 
 
-// api that i am joining the tables from second table to first table by userid.....
+// api that i am joining the tables from second table to first table by emails....
 app.get("/join_user_model" , (req,res) => {
     const user_token = req.cookies.token
     console.log(user_token,"????")

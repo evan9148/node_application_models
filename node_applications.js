@@ -219,9 +219,12 @@ app.put("/update",(req,res)=>{
 })
 
 // my delete api where i will delete the field with auth token......
-app.delete("/delete", (req,res) => {
-    knex.select("*").from("eventmodel").where("email",)
+app.delete("/deleted", (req,res) => {
+    var eventemail = req.body.user_email
+    console.log(eventemail,"OOOO");
+    knex.select("*").from("usermodel").where("email", eventemail)
     .then((data) => {
+        console.log(data)
         const user_token = req.cookies.token
         console.log(user_token,"????")
         var eventemail = req.body.user_email
@@ -229,6 +232,7 @@ app.delete("/delete", (req,res) => {
             if (authData["user"][0]["email"] === eventemail){
                 var decoded = jwt.verify(req.headers.authorization, 'secret_key');
                     console.log(decoded)
+                    console.log(decoded["user"][0]["email"],"TYUI")
                     knex('eventmodel')
                     .where({ user_email:decoded["user"][0]["email"]})
                     .del(req.body)
@@ -251,6 +255,7 @@ app.delete("/delete", (req,res) => {
         res.send(failed)
     })
 })
+
 
 
 // here is my event api where i will be getting second tables details in ascending order by name and city by query..........
